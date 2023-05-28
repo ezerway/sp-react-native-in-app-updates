@@ -1,10 +1,5 @@
-// @ts-expect-error
-import { compareVersions } from './utils';
 import InAppUpdatesBase from './InAppUpdatesBase';
-import type {
-  CheckOptions,
-  NeedsUpdateResponseBase,
-} from './types';
+import type { CheckOptions, NeedsUpdateResponseBase } from './types';
 import { getVersion } from 'react-native-device-info';
 
 const noop = () => {};
@@ -25,7 +20,7 @@ export default class InAppUpdates extends InAppUpdatesBase {
     return Promise.resolve({
       shouldUpdate: false,
       storeVersion: appVersion,
-      reason: "",
+      reason: '',
     });
   }
 
