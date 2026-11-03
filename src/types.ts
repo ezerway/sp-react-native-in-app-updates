@@ -24,6 +24,11 @@ export type StatusUpdateEvent = {
  */
 export type CheckOptions = {
   /**
+   * Bundle ID override (iOS only)
+   */
+  bundleId?: string;
+
+  /**
    * The semver of your current app version
    */
   curVersion?: string;
@@ -47,15 +52,24 @@ export type CheckOptions = {
    * ISO 3166-1 country code (iOS only)
    */
   country?: string;
+
+  /**
+   * Which strategy to use for checking/prompting for updates on iOS.
+   * 'itunes' (default) uses the iTunes Search API directly, no extra native dependency required.
+   * 'siren' delegates to react-native-siren, which must be installed separately. (iOS only)
+   */
+  iosStrategy?: IosStrategy;
 };
+
+export type IosStrategy = 'itunes' | 'siren';
 
 export type SemverVersion = string;
 export type SemverVersionCode = number;
 
 export interface NeedsUpdateResponseBase {
   shouldUpdate: boolean;
-  storeVersion: SemverVersion;
-  reason: string;
+  storeVersion?: SemverVersion;
+  reason?: string;
 }
 
 export enum AndroidOther {
@@ -80,8 +94,8 @@ export type AndroidInAppUpdateExtras = {
   versionCode: SemverVersionCode;
   isFlexibleUpdateAllowed: boolean;
   isImmediateUpdateAllowed: boolean;
-  packageName: string;
-  totalBytes: number;
+  packageName?: string;
+  totalBytes?: number;
   updatePriority: number;
 };
 
@@ -165,6 +179,8 @@ type IosStartUpdateOption = {
   updateType?: never;
   bundleId?: string;
   country?: string;
+  reverseButtons?: boolean;
+  iosStrategy?: IosStrategy;
 };
 
 type IosStartUpdateOptionWithLocalVersion = IosStartUpdateOption & {
